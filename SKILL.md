@@ -2,9 +2,9 @@
 name: Live call whisper
 description: >-
   Use when the user says start/live/tracking/whisper on (or stop) for private
-  live-call nudges, or when installing the Mac ear sidecar from the private team
-  repo. Includes first-open onboarding and webhook env setup. Translation is
-  opt-in only.
+  live-call nudges, or when installing the Mac ear sidecar from
+  https://github.com/guyberger/live-call-ear-sidecar. Includes first-open
+  onboarding and webhook env setup. Translation is opt-in only.
 ---
 Private live-call **nudges** while the user is already in a conversation. A Mac sidecar captures system + microphone audio, streams it to xAI STT, writes final utterances to jsonl, and the assistant sends brief suggestions in this chat. Never speak on the call.
 
@@ -12,7 +12,7 @@ Private live-call **nudges** while the user is already in a conversation. A Mac 
 - **Default:** nudges (corrections, suggested responses, tone, next topic, forgotten follow-ups). Translation is opt-in per session.
 - **Live cadence:** the assistant owns a short jsonl loop in the active chat (byte cursor + ~3–5s sleep). Do not rely on routines for live cadence; they can batch/backlog.
 - **Webhook:** packaged backup/catch-up routine. Env requires `EAR_WEBHOOK_URL` and `EAR_WEBHOOK_AUTH`; `ear.py` sends `Authorization: Bearer <value>`. Pause on stop.
-- **Installer source:** helper files are not embedded by a bot template. They live in the private team-accessible repo at `https://github.com/guyberger/sand_skills`, folder `live-call-whisper/ear-sidecar/`. Before installation, verify the teammate’s connected SCM account can read it. If that repo is not team-accessible, stop and ask the template owner to move/copy the folder to a private team repo and update this URL. Never make it public as a workaround.
+- **Installer source:** helper files are not embedded by a bot template. They live in the private team-accessible repo **https://github.com/guyberger/live-call-ear-sidecar** (files at repo root: `setup.sh`, `start.sh`, `stop.sh`, `ear.py`, etc.). Before installation, verify the teammate’s connected SCM account can read it. If they cannot, ask the template owner to grant private access. Never make the repo public as a workaround. Never create or modify GitHub PATs.
 
 ## First open (send once, verbatim)
 
@@ -24,16 +24,16 @@ Private live-call **nudges** while the user is already in a conversation. A Mac 
 > 3. Open my info pane (click my name in the chat header, or Cmd+Shift+I), expand the `Live jsonl whisper` routine, and copy its **Webhook URL** and **Webhook key**. Put them in `~/.config/ear-sidecar/env` as `EAR_WEBHOOK_URL=...` and `EAR_WEBHOOK_AUTH=...`. Don’t paste either value into chat.
 > 4. The first time we test, macOS may ask for Screen Recording; click Allow so I can hear call audio.
 >
-> I’ll fetch the private sidecar package, install it, and test everything else. When setup is done, say `start` when a call begins and `stop` when it ends.
+> I’ll fetch the private sidecar package from GitHub, install it, and test everything else. When setup is done, say `start` when a call begins and `stop` when it ends.
 
 After sending, run First-time install. Later opens: do not resend; stay quiet until start or help request.
 
 ## First-time install
 1. Confirm Mac is connected (`ListMachines`). If empty, point to Computers / Local execution and wait.
-2. Verify access to the private installer repo through the user’s connected SCM. Source folder: `live-call-whisper/ear-sidecar/`. Do not ask for GitHub PATs or copy credentials. Do not clone repositories onto the user’s computer. Use an approved repository agent/source to obtain the exact sidecar folder, stage it on the assistant computer, then copy those files onto the connected Mac at `~/projects/ear-sidecar/`.
-3. Confirm the source includes: `setup.sh`, `start.sh`, `stop.sh`, `ear.py`, `capture.swift`, `daemon_pipe.py`, `requirements.txt`, `env.example`, `jsonl.example`, and `session-keyterms.example`. Do not invent missing files.
+2. Verify access to **https://github.com/guyberger/live-call-ear-sidecar** through the user’s connected SCM. Do not ask for GitHub PATs. Do not clone onto the user’s computer as the primary path: use an approved repository agent/source to obtain the sidecar files, stage them on the assistant computer, then copy onto the connected Mac at `~/projects/ear-sidecar/`.
+3. Confirm the install includes: `setup.sh`, `start.sh`, `stop.sh`, `ear.py`, `capture.swift`, `daemon_pipe.py`, `requirements.txt`, `env.example`, `jsonl.example`, `session-keyterms.example`. Do not invent missing files.
 4. Run `~/projects/ear-sidecar/setup.sh`. It installs `websockets`, creates `~/.config/ear-sidecar/env`, and sets mode `600`. If `swiftc` is missing, user runs `xcode-select --install`, then retry.
-5. Ask for xAI API key through a secure secret field. Write `XAI_API_KEY` to env. Never ask the user to paste it in chat; never print/cat the env.
+5. Ask for xAI API key through a secure secret field. Write `XAI_API_KEY` to env. Never ask for a chat paste; never print/cat the env.
 6. Ensure imported webhook routine `Live jsonl whisper` exists. User copies its URL and key from the routine panel. Env definitions:
 ```bash
 XAI_API_KEY=
