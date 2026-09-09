@@ -1,0 +1,3 @@
+{"ts": "2026-08-21T00:00:00.000Z", "source": "live-call-sidecar", "sessionId": "ear-example", "isFinal": true, "type": "session_start", "text": "session started"}
+{"ts": "2026-08-21T00:00:01.000Z", "source": "live-call-sidecar", "sessionId": "ear-example", "isFinal": true, "speech_final": true, "type": "transcript", "speaker": "spk0", "text": "example utterance"}
+{"ts": "2026-08-21T00:00:02.000Z", "source": "live-call-sidecar", "sessionId": "ear-example", "isFinal": true, "type": "session_stop", "text": "session stopped"}

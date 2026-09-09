@@ -1,0 +1,7 @@
+bin/
+sessions/
+__pycache__/
+*.pyc
+.env
+.DS_Store
+.venv/

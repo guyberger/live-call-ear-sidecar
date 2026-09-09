@@ -1,0 +1,6 @@
+# Session STT keyterms — one term per line.
+# The agent writes session-keyterms.txt (same directory) before start.sh.
+# Missing file = no keyterms. Blank lines and # comments are ignored.
+# Example terms only — do not copy these; pick names/nouns from the pre-call pack.
+CustomerName
+ProductNoun
